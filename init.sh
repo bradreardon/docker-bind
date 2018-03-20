@@ -41,6 +41,7 @@ if [[ ${NAMED_GID_ACTUAL} -ne ${NAMED_GID} -o ${NAMED_UID_ACTUAL} -ne ${NAMED_UI
 then
     echo "change user / group"
     deluser ${USER}
+    delgroup 100
     addgroup -g ${NAMED_GID} ${GROUP}
     adduser -u ${NAMED_UID} -G ${GROUP} -h /etc/bind -g 'Linux User named' -s /sbin/nologin -D ${USER}
     echo "[DONE]"
