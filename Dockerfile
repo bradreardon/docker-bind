@@ -1,6 +1,6 @@
-FROM alpine:3.5
+FROM alpine:3.9  # should pin bind 9.12
 
-MAINTAINER pstauffer@confirm.ch
+MAINTAINER brad.jay.reardon@gmail.com
 
 #
 # Install all required dependencies.
@@ -9,15 +9,6 @@ MAINTAINER pstauffer@confirm.ch
 RUN apk --update upgrade && \
     apk add --update bind && \
     rm -rf /var/cache/apk/*
-
-
-#
-# Add named init script.
-#
-
-ADD init.sh /init.sh
-RUN chmod 750 /init.sh
-
 
 #
 # Define container settings.
@@ -29,9 +20,17 @@ EXPOSE 53/udp
 
 WORKDIR /etc/bind
 
-
 #
 # Start named.
 #
 
 CMD ["/init.sh"]
+
+
+#
+# Add named init script.
+#
+
+ADD init.sh /init.sh
+RUN chmod 750 /init.sh
+

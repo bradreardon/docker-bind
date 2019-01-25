@@ -33,6 +33,10 @@ echo "  GID prefered:    ${NAMED_GID:=${NAMED_GID_DEFAULT}}"
 echo "  Command:         ${COMMAND}"
 echo
 
+# Delete default guest/users user/group
+id -u guest && deluser guest
+id -g users && delgroup users
+
 #
 # Change UID / GID of named user.
 #
@@ -41,7 +45,6 @@ if [[ ${NAMED_GID_ACTUAL} -ne ${NAMED_GID} -o ${NAMED_UID_ACTUAL} -ne ${NAMED_UI
 then
     echo "change user / group"
     deluser ${USER}
-    delgroup 100
     addgroup -g ${NAMED_GID} ${GROUP}
     adduser -u ${NAMED_UID} -G ${GROUP} -h /etc/bind -g 'Linux User named' -s /sbin/nologin -D ${USER}
     echo "[DONE]"
